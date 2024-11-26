@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { adminAccess } from './accesses/admin'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -9,10 +10,10 @@ export const Users: CollectionConfig = {
     loginWithUsername: true,
   },
   access: {
-    read: ({ req: { user } }) => Boolean(user) && user!.role === 'admin',
-    update: ({ req: { user } }) => Boolean(user) && user!.role === 'admin',
-    create: ({ req: { user } }) => Boolean(user) && user!.role === 'admin',
-    delete: ({ req: { user } }) => Boolean(user) && user!.role === 'admin',
+    read: adminAccess,
+    update: adminAccess,
+    create: adminAccess,
+    delete: adminAccess,
   },
   fields: [
     {
