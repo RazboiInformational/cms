@@ -16,6 +16,7 @@
     "vercel:build": "payload migrate && pnpm build"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "latest",
     "@payloadcms/next": "latest",
     "@payloadcms/payload-cloud": "latest",
     "@payloadcms/richtext-lexical": "latest",
@@ -23,10 +24,10 @@
     "graphql": "^16.8.1",
     "next": "15.0.0",
     "payload": "latest",
+    "payload-recaptcha-v3": "^3.0.0",
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
-    "sharp": "0.32.6",
-    "@payloadcms/db-postgres": "latest"
+    "sharp": "0.32.6"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",

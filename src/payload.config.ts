@@ -4,6 +4,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import reCAPTCHAv3 from 'payload-recaptcha-v3'
 
 import { Links } from './collections/Links'
 import { Users } from './collections/Users'
@@ -32,5 +33,9 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  plugins: [],
+  plugins: [
+    reCAPTCHAv3({
+      secret: process.env.GOOGLE_RECAPTCHA_SECRET || '',
+    }),
+  ],
 })

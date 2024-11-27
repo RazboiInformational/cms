@@ -3,6 +3,10 @@ import { text } from 'payload/shared'
 
 export const Links: CollectionConfig = {
   slug: 'links',
+  access: {
+    create: ({ req }) =>
+      Boolean(req.user) || req.headers.get('x-api-key') === (process.env.API_KEY || ''),
+  },
   fields: [
     {
       type: 'text',
@@ -24,6 +28,19 @@ export const Links: CollectionConfig = {
 
         return text(value, options)
       },
+      hooks: {
+        beforeChange: [
+          async ({ value }) => {
+            const res = await fetch(value, {
+              redirect: 'follow',
+              method: 'GET',
+            })
+
+            const url = new URL(res.url)
+            return url.origin + url.pathname
+          },
+        ],
+      },
     },
     {
       type: 'checkbox',
@@ -31,4 +48,14 @@ export const Links: CollectionConfig = {
       defaultValue: false,
     },
   ],
+  custom: {
+    recaptcha: [
+      {
+        name: 'create',
+        action: 'trimite',
+        // @ts-expect-error
+        skip: ({ req: { user } }) => Boolean(user),
+      },
+    ],
+  },
 }
