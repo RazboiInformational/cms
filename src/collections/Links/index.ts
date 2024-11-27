@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { followRedirects } from './hooks/followRedirects'
 import { revalidateOnChange } from './hooks/revalidateOnChange'
 import { revalidateOnDelete } from './hooks/revalidateOnDelete'
+import { syncWithTikTok } from './hooks/syncWithTikTok'
 import { urlValidation } from './urlValidation'
 
 export const Links: CollectionConfig = {
@@ -14,7 +15,7 @@ export const Links: CollectionConfig = {
       Boolean(req.user) || req.headers.get('x-api-key') === (process.env.API_KEY || ''),
   },
   hooks: {
-    afterChange: [revalidateOnChange],
+    afterChange: [revalidateOnChange, syncWithTikTok],
     afterDelete: [revalidateOnDelete],
   },
   fields: [
@@ -34,6 +35,26 @@ export const Links: CollectionConfig = {
       type: 'checkbox',
       name: 'approved',
       defaultValue: false,
+    },
+    {
+      name: 'views',
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'likes',
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'comments',
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'shares',
+      type: 'number',
+      defaultValue: 0,
     },
   ],
   custom: {
